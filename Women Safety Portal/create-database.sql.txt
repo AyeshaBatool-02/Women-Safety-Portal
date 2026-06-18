@@ -1,0 +1,28 @@
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS `incident_reports`;
+DROP TABLE IF EXISTS `users`;
+
+-- Updated users table with username
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(150) NOT NULL,
+  `Email` varchar(150) NOT NULL UNIQUE,
+  `Password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Incident reports table with user_id as a foreign key
+CREATE TABLE IF NOT EXISTS `incident_reports` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` INT(11) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `phone` VARCHAR(20) NOT NULL,
+    `location` VARCHAR(255) NOT NULL,
+    `date` DATE NOT NULL,
+    `time` TIME NOT NULL,
+    `details` TEXT NOT NULL,
+    `witnesses` VARCHAR(255),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
